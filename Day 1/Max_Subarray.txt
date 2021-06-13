@@ -1,0 +1,21 @@
+// Problem: https://leetcode.com/problems/maximum-subarray/
+
+
+
+//Approach: BF
+
+
+ int maxSubArray(vector<int>& arr) {
+        int size=arr.size();
+        int max_ending_here = 0, max_so_far = INT_MIN;
+        for(auto it: nums){
+            max_ending_here +=it;
+            max_so_far = max(sum,max_ending_here);
+            if(sum<0) sum =0;
+        } 
+        return max_so_far;
+    }
+};
+
+
+    
