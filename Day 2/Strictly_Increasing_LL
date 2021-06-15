@@ -1,0 +1,28 @@
+// Problem: https://binarysearch.com/problems/A-Strictly-Increasing-Linked-List
+
+
+
+
+/**
+ * class LLNode {
+ *     public:
+ *         int val;
+ *         LLNode *next;
+ * };
+ */
+bool solve(LLNode* head) {
+    LLNode* slow = head;
+    LLNode* fast = head->next;
+    if (head == NULL || head->next == NULL) {
+        return true;
+    } else {
+        while (fast) {
+            if (slow->val >= fast->val) {
+                return false;
+            }
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return true;
+    }
+}
