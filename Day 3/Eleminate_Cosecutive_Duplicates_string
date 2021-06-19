@@ -1,0 +1,13 @@
+//Problem: To remove consecutive duplicates in string
+
+
+string solve(string str) {
+    int N = str.length();
+    string k;
+    for (int i = 0; i < N; i++) {
+        if(str[i]!=str[i-1]){
+            k.push_back(str[i]);
+        }
+    }
+    return k;
+}
