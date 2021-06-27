@@ -1,0 +1,36 @@
+//Problem : https://leetcode.com/problems/powx-n/
+
+//Optimal 1 : Solution by striver
+
+double myPow(double x, int n) {
+        double ans=1.0;
+        long nn = n;
+        if(nn<0) nn= -1*nn;
+        while(nn>0){
+            if(nn%2==1){
+                ans=ans*x;
+                nn=nn-1;
+            }
+            else{
+                x=x*x;
+                nn=nn/2;
+            }
+        }
+       if(n<0)ans = (double)(1.0)/(double)(ans);
+        return ans;
+    }
+
+
+
+//Optimal Pro Max : Solution by Unknown 
+
+double myPow(double x, int n)
+{
+	double result = 1.0;
+	for(int i = n; i!=0; i/=2)
+	{
+		if (i%2) result *=x;
+		x*=x;
+	}
+	return n<0 ? 1/result :result;
+}
