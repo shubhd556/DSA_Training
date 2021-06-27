@@ -1,0 +1,382 @@
+//All about Single Linked lists
+//Every Basic operation insert,delete,search,etc.
+
+
+#include <bits/stdc++.h>
+using namespace std;
+//Single Linked list
+class Node{
+    public:
+    int data;
+    Node* next;
+    
+    Node(int val){
+        data = val;
+        next=NULL;
+    }
+};
+
+
+//return middle element as head PS: solved in leetcode
+
+ ListNode* middleNode(ListNode* head) {
+        int count=0;
+        ListNode* temp= head;
+        while(temp!=NULL){
+            count++;
+            temp=temp->next;
+        }
+        int i=0;
+        ListNode* hemp= head;
+        count=(count/2);
+        while(i!=count){
+            hemp=hemp->next;
+            i++;
+        }
+            return hemp;
+    }
+
+
+
+void insertail(Node* &head,int val){
+    Node* n = new Node(val);
+
+    if(head==NULL){
+        head=n;
+        return;
+    }
+    Node* temp =head;
+    while (temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=n;
+
+}
+
+void inserthead(Node* &head,int val){
+    Node* n = new Node(val);
+    n->next= head;
+    head = n;
+}
+
+void delfirst(Node* &head){
+    Node* todel=head;
+    head = head->next;
+    delete todel;
+}
+
+void deletion(Node* &head,int val){
+    if(head==NULL){
+        return;
+    }
+    if(head->next==NULL){
+        delfirst(head);
+        return;
+    }
+    Node* temp = head;
+    while(temp->next->data!=val){
+        temp=temp->next;
+    }
+    Node* todel = temp->next;
+    temp->next = temp->next->next;
+    delete todel;
+
+}
+
+bool detectCycle(Node* & head){
+    Node* slow = head;
+    Node* fast = head;
+    while(fast!=NULL && fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+
+        if(fast==slow){
+            return true;
+        }
+    }
+    return false;
+}
+
+int leng(Node* &head){
+    Node* temp = head;
+    int count=0;
+    while(temp!=NULL){  
+        count+=1;
+        temp=temp->next;
+    }
+    return count;
+}
+
+
+Node* appendknodes(Node* &head,int k){
+    Node* temp = head;
+    Node* newhead;
+    Node* newtail;
+    int l=leng(head);
+    k=k%l;
+    int count=1;
+    while(temp->next!=NULL){
+        if(count==l-k){
+            newtail=temp;
+        }
+        if(count==l-k+1){
+            newhead=temp;
+        }
+        temp=temp->next;
+        count++;
+    }
+    newtail->next=NULL;
+    temp->next=head;
+    return newhead;
+  
+}
+
+//Merge 2 sorted linked lists 
+
+Node* mearge(Node* &head1, Node* &head2){
+    Node* p1=head1;
+    Node* p2=head2;
+
+    Node* dum =new Node(-1);
+    Node* p3 = dum;
+
+    while(p1!=NULL && p2!=NULL){
+        if(p1->data<p2->data){
+            p3->next=p1;
+            p1=p1->next;
+        }
+        else{
+            p3->next=p2;
+            p2=p2->next;
+        }
+        p3=p3->next;
+    }
+
+    while(p1!=NULL){
+        p3->next=p1;
+        p1=p1->next;
+        p3=p3->next;
+    }
+    while(p2!=NULL){
+        p3->next=p2;
+        p2=p2->next;
+        p3=p3->next;
+    }
+
+    return dum->next;
+}
+
+//AddTwo link list data and return new Node   btw Copied code from Leetcode solution in JAVA
+
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode c1 = l1;
+        ListNode c2 = l2;
+        ListNode sentinel = new ListNode(0);
+        ListNode d = sentinel;
+        int sum = 0;
+        while (c1 != null || c2 != null) {
+            sum /= 10;
+            if (c1 != null) {
+                sum += c1.val;
+                c1 = c1.next;
+            }
+            if (c2 != null) {
+                sum += c2.val;
+                c2 = c2.next;
+            }
+            d.next = new ListNode(sum % 10);
+            d = d.next;
+        }
+        if (sum / 10 == 1)
+            d.next = new ListNode(1);
+        return sentinel.next;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Recursion
+
+Node* mergeRecur(Node* &head1, Node* &head2){
+    Node* result;
+
+    if(head1==NULL){
+        return head2;
+    }
+    if(head2==NULL){
+        return head1;
+    }
+
+    if(head1->data<head2->data){
+        result=head1;
+        result->next=mergeRecur(head1->next,head2);
+    }
+    else{
+        result=head2;
+        result->next=mergeRecur(head1,head2->next);
+    }
+    return result;
+}
+
+//Putting even number elements after odd
+void oddandeven(Node* &head){
+    Node* odd =head;
+    Node* even =head->next;
+    Node* evenstart=even;
+    while(odd->next!=NULL && even->next!=NULL){
+        odd->next=even->next;
+        odd=odd->next;
+
+        even->next=odd->next;
+        even=even->next;
+    }
+
+    odd->next=evenstart;
+    if(odd->next!=NULL){
+        even->next=NULL;
+    }
+}
+
+
+void display(Node* head){
+ Node *temp= head;
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+Node* rever(Node* &head){
+    Node* prev = NULL;
+    Node* curr = head;
+    Node* nextpt;
+
+    while(curr!=NULL){
+        nextpt = curr->next;
+        curr->next= prev;
+        prev = curr;
+        curr=nextpt;
+
+    }
+
+    return prev;
+}
+// Recursion Reverse
+Node* reverseRecur(Node* &head){
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    Node* newhead= reverseRecur(head->next);
+    head->next->next= head;
+    head->next=NULL;
+
+    return newhead;
+}
+
+
+//Find the intersection of two LLs
+int intersection(Node* &head1, Node* &head2){
+    int l1 = leng(head1);
+    int l2 = leng(head2);
+    int k=0;
+    Node* ptr1;
+    Node* ptr2;
+    if(l1>l2){
+        k=l1-l2;
+        ptr1 = head1;
+        ptr2 = head2;
+    }
+    else{
+        k=l2-l1;
+        ptr1 = head2;
+        ptr2 = head1;
+    }
+
+    while(k){
+        ptr1=ptr1->next;
+        if(ptr1==NULL){
+            return -1;
+        }
+        k--;
+    }
+
+    while(ptr1!=NULL && ptr2!=NULL){
+        if(ptr1==ptr2){
+            return ptr1->data;
+        }
+        ptr1=ptr1->next;
+        ptr2=ptr2->next;
+    }
+    return -1;
+
+}
+//intersect 2 LLs
+void intersect(Node* &head1, Node* &head2, int pos){
+    Node* temp=head1;
+    pos--;
+    while(pos--){
+        temp = temp->next;
+    }
+    Node* temp2 = head2;
+    while(temp2->next!=NULL){
+        temp2=temp2->next;
+    }
+    temp2->next=temp;
+}
+
+
+
+bool search(Node* head,int key){
+    Node* temp= head;
+     while(temp!=NULL){
+        if(temp->data == key){
+            return true;
+        }
+        temp=temp->next;
+    }
+    return false;
+}
+
+int main() {
+    Node * head = NULL;
+    Node* head2 =NULL;
+    insertail(head,1);
+    insertail(head,2);
+    insertail(head,5);
+    insertail(head,4);
+    display(head);
+    insertail(head2,6);
+    insertail(head2,7);
+    insertail(head2,8);
+    insertail(head2,9);
+    display(head2);
+    intersect(head,head2,3);
+    cout<<intersection(head,head2);
+
+    // cout<<search(head,10)<<endl;
+    // deletion(head,3);
+    // Node* newhead = rever(head);
+    // display(newhead);
+    // Node* newhead=appendknodes(head,2);
+    // display(newhead);
+
+
+
+
+	return 0;
+}
