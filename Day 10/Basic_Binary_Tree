@@ -1,0 +1,112 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+struct Node
+    {
+        int data;
+        struct Node* left;
+        struct Node* right;
+
+        Node(int val){
+            data=val;
+            left=NULL;
+            right=NULL;
+        }
+    };
+
+
+void preorder(struct Node* root){
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+}
+void inorder(struct Node* root){
+    if(root==NULL){
+        return;
+    }
+    inorder(root->left);
+     cout<<root->data<<" ";
+    inorder(root->right);
+}
+void postorder(struct Node* root){
+    if(root==NULL){
+        return;
+    }
+    postorder(root->left);
+    postorder(root->right);
+    cout<<root->data<<" ";
+}
+
+
+int search(int inor[], int start, int end ,int curr){
+    for(int i=start;i<=end;i++){
+        if(inor[i]==curr){
+            return i;
+        }
+    }
+    return -1;
+}
+//If values are given and to build Binary Tree
+Node* givenpreinorder(int preor[], int inor[], int start, int end){
+    static int idx=0;
+    if(start>end){
+        return NULL;
+    }
+    int curr = preor[idx];
+    idx++;
+    Node* node = new Node(curr);
+    if(start==end){
+        return node;
+    }
+    int pos = search(inor,start,end,curr);
+    node->left = givenpreinorder(preor,inor,start,pos-1);
+    node->right=givenpreinorder(preor,inor,pos+1,end);
+   return node;
+}
+
+
+Node* givenpostinorder(int postor[], int inor[], int start, int end){
+    static int idx=6;
+    if(start>end){
+        return NULL;
+    }
+    int curr = postor[idx];
+    idx--;
+    Node* node = new Node(curr);
+    if(start==end){
+        return node;
+    }
+    int pos = search(inor,start,end,curr);
+    node->right = givenpostinorder(postor,inor,pos+1,end);
+    node->left=givenpostinorder(postor,inor,start,pos-1);
+   return node;
+}
+
+
+
+
+
+
+int main() {
+
+    struct Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right= new Node(3);
+
+    root->left->left= new Node(4);
+    root->left->right = new Node(5);
+    root->right->left= new Node(6);
+    root->right->right = new Node(7);
+    int preo[]={1,2,4,5,3,6,7};
+    int inor[]={4,2,5,1,6,3,7};
+    int postor[]={4,5,2,6,7,3,1};         
+    // Node* roo= givenpreinorder(preo,inor,0,6);
+    // inorder(roo);
+    Node* roo= givenpostinorder(postor,inor,0,6);
+    postorder(roo);
+    return 0;
+}

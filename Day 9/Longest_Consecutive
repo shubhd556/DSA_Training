@@ -1,0 +1,28 @@
+//Problem: https://leetcode.com/problems/longest-consecutive-sequence/
+
+//Brute Force or using sort
+
+
+int longestConsecutive(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        
+        int ans = 0;
+        int prev = -2;
+        int curr = 0;
+        for (int num: nums) {
+            if (num == prev + 1) {
+                prev = num;
+                ++curr;
+            } else if (num == prev) {
+                continue;
+            } else {
+                prev = num;
+                curr = 1;
+            }
+            ans = max(ans, curr);
+        }
+        return ans;
+    }
+
+
+    
