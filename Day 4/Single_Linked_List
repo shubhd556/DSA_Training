@@ -82,7 +82,7 @@ void deletion(Node* &head,int val){
     delete todel;
 
 }
-
+//Detect Cycle in LL
 bool detectCycle(Node* & head){
     Node* slow = head;
     Node* fast = head;
@@ -96,6 +96,11 @@ bool detectCycle(Node* & head){
     }
     return false;
 }
+
+
+
+
+
 
 int leng(Node* &head){
     Node* temp = head;
@@ -133,7 +138,7 @@ Node* appendknodes(Node* &head,int k){
 
 //Merge 2 sorted linked lists 
 
-Node* mearge(Node* &head1, Node* &head2){
+Node* merge(Node* &head1, Node* &head2){
     Node* p1=head1;
     Node* p2=head2;
 

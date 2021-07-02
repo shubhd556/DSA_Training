@@ -1,0 +1,32 @@
+//Remove loop in LL
+
+//using set
+
+
+void removeLoop(Node* head)
+    {
+    Node* prev = nullptr;       // previous pointer
+    Node* curr = head;          // main pointer
+ 
+    // maintain a set to store visited nodes
+    unordered_set<Node*> set;
+ 
+    // traverse the list
+    while (curr)
+    {
+        // set the previous pointer to null if the current node is seen before
+        if (set.find(curr) != set.end())
+        {
+            prev->next = nullptr;
+            return;
+        }
+ 
+        // insert the current node into the set
+        set.insert(curr);
+ 
+        // update the previous pointer to the current node and
+        // move the main pointer to the next node
+        prev = curr;
+        curr = curr->next;
+    }
+    }
