@@ -1,0 +1,20 @@
+
+
+// Moving Last Element to First 
+
+Node* Movelastfirst(Node* head){
+    Node* temp=head;
+    Node* ptr=NULL;
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    while (temp->next!=NULL){
+        ptr=temp;
+        temp=temp->next;
+    }
+    ptr->next=NULL;
+    temp->next=head;
+    head=temp;
+    return temp;
+    
+}

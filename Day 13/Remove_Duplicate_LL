@@ -1,0 +1,42 @@
+
+//Problem : https://practice.geeksforgeeks.org/problems/remove-duplicates-from-an-unsorted-linked-list/1
+
+
+//Sorted Array
+void removeDuplicate(Node* head){
+    Node* temp= head;
+    Node* ptr;
+    if(temp==NULL){
+        return;
+    }
+    while(temp->next!=NULL){
+        if(temp->data==temp->next->data){
+        ptr = temp->next->next;
+        free(temp->next);
+        temp->next= ptr;
+        }
+        else{
+            temp=temp->next;
+        }
+    }
+
+}
+
+
+//Unsorted Array
+void removeunsortedDuplicate(Node* head){
+    unordered_set<int> seen;
+    Node* temp=head;
+    Node* ptr = NULL;
+    while(temp!=NULL){
+        if(seen.find(temp->data)!=seen.end()){
+            ptr->next= temp->next;
+            delete(temp);
+        }
+        else{
+            seen.insert(temp->data);
+            ptr=temp;
+        }
+        temp=temp->next;
+    }
+}
