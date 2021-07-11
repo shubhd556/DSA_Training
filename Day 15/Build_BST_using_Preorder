@@ -1,0 +1,23 @@
+//Build Bst using preorder
+
+
+Node* constructpreor(int preor[],int*preoridx, int key, int min ,int max,int n){
+    Node* root = NULL;
+
+    if(*preoridx>=NULL){
+        return NULL;
+    }
+    if(key>min && key<max){
+        root= new Node(key);
+        *preoridx = *preoridx+1;
+
+        if(*preoridx<n){
+            root->left = constructpreor(preor,preoridx,preor[*preoridx],min,key,n);
+        }
+        
+        if(*preoridx<n){
+            root->right = constructpreor(preor,preoridx,preor[*preoridx],key,max,n);
+        }
+    }
+    return root;
+}

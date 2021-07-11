@@ -1,0 +1,35 @@
+
+//Add "1" to Number presented in LL
+
+
+Node* addOne(Node *head) 
+
+
+   {
+        
+        Node* ln = head;
+        if(head->next == NULL){
+            head->data+=1;
+            return head;
+        }
+        Node *t = head;
+        while(t -> next){
+             if(t->data != 9){
+                ln = t;
+            }
+            t = t->next;
+            
+        }
+        if(t->data==9  && ln != NULL){
+            t = ln;
+             t -> data += 1;
+             t = t->next;
+            while(t){
+               t->data = 0;
+               t = t->next;
+            }
+        }else{
+            t->data+=1;
+        }
+        return head;
+    }
